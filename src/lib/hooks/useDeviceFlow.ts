@@ -29,7 +29,7 @@ export function useDeviceFlow(): UseDeviceFlowReturn {
   const [tokens, setTokens] = useState<AuthTokens | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPolling, setIsPolling] = useState<boolean>(false);
-  const [interval, setInterval] = useState<number>(5);
+  const [pollingInterval, setPollingInterval] = useState<number>(5);
 
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -76,7 +76,7 @@ export function useDeviceFlow(): UseDeviceFlowReturn {
           setStatus('pending');
           if (data.slow_down) {
             // Increase polling interval
-            setInterval(prev => prev + 5);
+            setPollingInterval(prev => prev + 5);
           }
           break;
 
@@ -115,7 +115,7 @@ export function useDeviceFlow(): UseDeviceFlowReturn {
     // Start polling
     pollingIntervalRef.current = setInterval(() => {
       poll();
-    }, interval * 1000);
+    }, pollingInterval * 1000);
 
     // Start countdown timer
     countdownIntervalRef.current = setInterval(() => {
@@ -132,7 +132,7 @@ export function useDeviceFlow(): UseDeviceFlowReturn {
         stopPolling();
       }
     }, 1000);
-  }, [deviceCode, interval, isPolling, poll, stopPolling]);
+  }, [deviceCode, pollingInterval, isPolling, poll, stopPolling]);
 
   const initiateFlow = async (deviceType: string, deviceName: string) => {
     setError(null);
@@ -155,7 +155,7 @@ export function useDeviceFlow(): UseDeviceFlowReturn {
       setDeviceCode(data.device_code);
       setUserCode(data.user_code);
       setVerificationUri(data.verification_uri);
-      setInterval(data.interval);
+      setPollingInterval(data.interval);
 
       const expiresAt = new Date(Date.now() + data.expires_in * 1000);
       expiresAtRef.current = expiresAt;
@@ -180,7 +180,7 @@ export function useDeviceFlow(): UseDeviceFlowReturn {
     setPollCount(0);
     setTokens(null);
     setError(null);
-    setInterval(5);
+    setPollingInterval(5);
     expiresAtRef.current = null;
   };
 
