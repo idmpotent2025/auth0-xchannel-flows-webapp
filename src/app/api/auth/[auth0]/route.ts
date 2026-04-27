@@ -1,8 +1,7 @@
-import { getAccessToken } from '@auth0/nextjs-auth0';
 import { NextRequest, NextResponse } from 'next/server';
 
-// For @auth0/nextjs-auth0 v4.x with App Router, we need to use the Auth0Provider
-// and handle routes manually. This route delegates to Auth0's endpoints.
+// Manual OAuth 2.0 implementation for Auth0 authentication
+// Handles login, logout, callback, and user info endpoints
 
 export async function GET(
   request: NextRequest,
