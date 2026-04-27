@@ -1,11 +1,11 @@
-import { handleAuth, handleLogin } from '@auth0/nextjs-auth0';
+import { handleAuth } from '@auth0/nextjs-auth0';
 
 export const GET = handleAuth({
-  login: handleLogin({
+  login: {
     returnTo: '/shop',
     authorizationParams: {
       audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
       scope: process.env.NEXT_PUBLIC_AUTH0_SCOPE,
     },
-  }),
+  },
 });
