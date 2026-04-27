@@ -31,7 +31,7 @@ export function useCIBAFlow(): UseCIBAFlowReturn {
   const [tokens, setTokens] = useState<AuthTokens | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPolling, setIsPolling] = useState<boolean>(false);
-  const [interval, setInterval] = useState<number>(5);
+  const [pollingInterval, setPollingInterval] = useState<number>(5);
 
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -77,7 +77,7 @@ export function useCIBAFlow(): UseCIBAFlowReturn {
         case 'pending':
           setStatus('pending');
           if (data.slow_down) {
-            setInterval(prev => prev + 5);
+            setPollingInterval(prev => prev + 5);
           }
           break;
 
@@ -115,7 +115,7 @@ export function useCIBAFlow(): UseCIBAFlowReturn {
 
     pollingIntervalRef.current = setInterval(() => {
       poll();
-    }, interval * 1000);
+    }, pollingInterval * 1000);
 
     countdownIntervalRef.current = setInterval(() => {
       if (!expiresAtRef.current) return;
@@ -131,7 +131,7 @@ export function useCIBAFlow(): UseCIBAFlowReturn {
         stopPolling();
       }
     }, 1000);
-  }, [authRequestId, interval, isPolling, poll, stopPolling]);
+  }, [authRequestId, pollingInterval, isPolling, poll, stopPolling]);
 
   const initiateCIBA = async (deviceName?: string, location?: string) => {
     setError(null);
@@ -165,7 +165,7 @@ export function useCIBAFlow(): UseCIBAFlowReturn {
       }
 
       setAuthRequestId(data.auth_req_id);
-      setInterval(data.interval);
+      setPollingInterval(data.interval);
 
       const expiresAt = new Date(Date.now() + data.expires_in * 1000);
       expiresAtRef.current = expiresAt;
@@ -189,7 +189,7 @@ export function useCIBAFlow(): UseCIBAFlowReturn {
     setPollCount(0);
     setTokens(null);
     setError(null);
-    setInterval(5);
+    setPollingInterval(5);
     expiresAtRef.current = null;
   };
 
