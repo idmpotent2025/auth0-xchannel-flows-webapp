@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  /* Identity Architect Demo Theme Colors */
+  --primary: #003057;
+  --accent: #0055A6;
+  --background: #ffffff;
+  --foreground: #171717;
+  --teal: #3A7D7D;
+}
+
+@theme inline {
+  /* Custom color palette */
+  --color-primary: #003057;
+  --color-primary-50: #E6EBF0;
+  --color-primary-100: #CCD7E1;
+  --color-primary-500: #003057;
+  --color-primary-600: #002646;
+  --color-primary-900: #000A12;
+
+  --color-accent: #0055A6;
+  --color-accent-50: #E6F0F9;
+  --color-accent-100: #CCE1F3;
+  --color-accent-500: #0055A6;
+  --color-accent-600: #004485;
+  --color-accent-900: #001122;
+
+  --color-teal: #3A7D7D;
+  --color-teal-50: #EBF3F3;
+  --color-teal-100: #D7E7E7;
+  --color-teal-500: #3A7D7D;
+  --color-teal-600: #2E6464;
+  --color-teal-900: #0C1919;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
