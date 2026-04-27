@@ -6,9 +6,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { auth0: string } }
+  { params }: { params: Promise<{ auth0: string }> }
 ) {
-  const { auth0: route } = params;
+  const { auth0: route } = await params;
 
   // Build the Auth0 URL
   const auth0Domain = process.env.NEXT_PUBLIC_AUTH0_DOMAIN;
