@@ -31,7 +31,7 @@ export default function Home() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {/* Universal Login */}
-          <Link href="/login">
+          <Link href="/flows/universal-login">
             <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer h-full">
               <div className="text-4xl mb-4">🔐</div>
               <h2 className="text-2xl font-bold text-primary mb-2">
@@ -44,7 +44,7 @@ export default function Home() {
           </Link>
 
           {/* Smart TV Device Flow */}
-          <Link href="/tv-device">
+          <Link href="/flows/device/tv">
             <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer h-full">
               <div className="text-4xl mb-4">📺</div>
               <h2 className="text-2xl font-bold text-primary mb-2">
@@ -57,7 +57,7 @@ export default function Home() {
           </Link>
 
           {/* Smart Car Device Flow */}
-          <Link href="/car-device">
+          <Link href="/flows/device/car">
             <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer h-full">
               <div className="text-4xl mb-4">🚗</div>
               <h2 className="text-2xl font-bold text-primary mb-2">
@@ -70,7 +70,7 @@ export default function Home() {
           </Link>
 
           {/* CIBA Push Flow */}
-          <Link href="/call-center">
+          <Link href="/flows/ciba/call-center">
             <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer h-full">
               <div className="text-4xl mb-4">📞</div>
               <h2 className="text-2xl font-bold text-primary mb-2">
@@ -83,7 +83,7 @@ export default function Home() {
           </Link>
 
           {/* Native2Web SSO */}
-          <Link href="/sso">
+          <Link href="/flows/native2web/sso">
             <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer h-full">
               <div className="text-4xl mb-4">🔄</div>
               <h2 className="text-2xl font-bold text-primary mb-2">
@@ -120,7 +120,7 @@ export default function Home() {
                 Logout
               </button>
             ) : (
-              <Link href="/login" className="underline hover:text-gray-200">
+              <Link href="/flows/universal-login" className="underline hover:text-gray-200">
                 Login
               </Link>
             )}

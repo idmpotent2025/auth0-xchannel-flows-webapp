@@ -6,7 +6,7 @@ const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
 function getRateLimitKey(request: NextRequest, endpoint: string): string {
   const forwarded = request.headers.get('x-forwarded-for');
-  const ip = forwarded ? forwarded.split(',')[0] : request.ip || 'unknown';
+  const ip = forwarded ? forwarded.split(',')[0].trim() : 'unknown';
   return `${ip}:${endpoint}`;
 }
 
@@ -31,7 +31,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Rate limiting for device flow polling
-  if (pathname === '/api/device-flow/poll') {
+  if (pathname === '/flows/device/api/poll') {
     const key = getRateLimitKey(request, 'device-poll');
     const allowed = checkRateLimit(key, 12, 60000); // 12 requests per minute (5 sec interval)
 
@@ -44,7 +44,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Rate limiting for CIBA polling
-  if (pathname === '/api/ciba/poll') {
+  if (pathname === '/flows/ciba/api/poll') {
     const key = getRateLimitKey(request, 'ciba-poll');
     const allowed = checkRateLimit(key, 12, 60000); // 12 requests per minute
 
@@ -57,7 +57,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Rate limiting for token exchange
-  if (pathname === '/api/native2web/exchange') {
+  if (pathname === '/flows/native2web/api/exchange') {
     const key = getRateLimitKey(request, 'token-exchange');
     const allowed = checkRateLimit(key, 3, 60000); // 3 requests per minute
 
@@ -70,7 +70,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Rate limiting for device flow initiation
-  if (pathname === '/api/device-flow/initiate' || pathname === '/api/ciba/initiate') {
+  if (pathname === '/flows/device/api/initiate' || pathname === '/flows/ciba/api/initiate') {
     const key = getRateLimitKey(request, pathname);
     const allowed = checkRateLimit(key, 5, 300000); // 5 requests per 5 minutes
 
@@ -87,8 +87,8 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/api/device-flow/:path*',
-    '/api/ciba/:path*',
-    '/api/native2web/:path*',
+    '/flows/device/api/:path*',
+    '/flows/ciba/api/:path*',
+    '/flows/native2web/api/:path*',
   ],
 };
